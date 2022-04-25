@@ -15,9 +15,9 @@
     <version>1.0.0</version>
 
     <properties>
-        <nebula-java.version>2.0.0-rc1</nebula-java.version>
+        <nebula-java.version>3.0.0</nebula-java.version>
         <fastjson.verson>1.2.79</fastjson.verson>
-        <log4j-api.version>2.11.2</log4j-api.version>
+        <log4j-api.version>2.17.0</log4j-api.version>
         <lombok.version>1.18.12</lombok.version>
         <beanutils.version>1.9.4</beanutils.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
@@ -103,14 +103,14 @@
     </developers>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
+<!--        <snapshotRepository>-->
+<!--            <id>ossrh</id>-->
+<!--            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>-->
+<!--        </snapshotRepository>-->
+<!--        <repository>-->
+<!--            <id>ossrh</id>-->
+<!--            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+<!--        </repository>-->
     </distributionManagement>
 
     <build>

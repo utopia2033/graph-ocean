@@ -16,7 +16,7 @@ import com.vesoft.nebula.Row;
 import com.vesoft.nebula.Value;
 import com.vesoft.nebula.client.graph.data.ResultSet;
 import com.vesoft.nebula.client.graph.net.Session;
-import com.vesoft.nebula.graph.ErrorCode;
+import com.vesoft.nebula.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -52,12 +52,12 @@ public class NebulaSessionWrapper implements NebulaSession {
             resultSet = this.session.execute(statement);
         } catch (Exception e) {
             log.error("更新nebula异常 Thrift rpc call failed: {}", e.getMessage());
-            throw new NebulaExecuteException(ErrorCode.E_RPC_FAILURE, e.getMessage(), e);
+            throw new NebulaExecuteException(ErrorCode.E_RPC_FAILURE.getValue(), e.getMessage(), e);
         }
-        if (resultSet.getErrorCode() == ErrorCode.SUCCEEDED) {
-            return ErrorCode.SUCCEEDED;
+        if (resultSet.getErrorCode() == ErrorCode.SUCCEEDED.getValue()) {
+            return ErrorCode.SUCCEEDED.getValue();
         }
-        if (resultSet.getErrorCode() == ErrorCode.E_EXECUTION_ERROR
+        if (resultSet.getErrorCode() == ErrorCode.E_EXECUTION_ERROR.getValue()
                 && resultSet.getErrorMessage().contains(E_DATA_CONFLICT_ERROR)) {
             //版本冲突，session内部不再打印错误日志，直接抛出自定义的版本异常
             throw new NebulaVersionConflictException(resultSet.getErrorCode(), resultSet.getErrorMessage());
@@ -78,7 +78,7 @@ public class NebulaSessionWrapper implements NebulaSession {
             log.error("查询nebula异常 code:{}, msg:{}, nGql:{} ", ErrorCode.E_RPC_FAILURE, e.getMessage(), statement);
             throw new NebulaExecuteException(ErrorEnum.QUERY_NEBULA_EROR, e);
         }
-        if (resultSet != null && resultSet.getErrorCode() != ErrorCode.SUCCEEDED) {
+        if (resultSet != null && resultSet.getErrorCode() != ErrorCode.SUCCEEDED.getValue()) {
             log.error("查询nebula异常:{},{},nGql:{}", resultSet.getErrorCode(), resultSet.getErrorMessage(), statement);
             throw new NebulaExecuteException(ErrorEnum.QUERY_NEBULA_EROR);
         }

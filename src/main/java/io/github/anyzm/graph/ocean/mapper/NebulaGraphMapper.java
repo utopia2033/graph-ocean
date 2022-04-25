@@ -7,6 +7,7 @@ package io.github.anyzm.graph.ocean.mapper;
 
 import com.google.common.collect.Lists;
 import com.vesoft.nebula.client.graph.exception.AuthFailedException;
+import com.vesoft.nebula.client.graph.exception.ClientServerIncompatibleException;
 import com.vesoft.nebula.client.graph.exception.IOErrorException;
 import com.vesoft.nebula.client.graph.exception.NotValidConnectionException;
 import io.github.anyzm.graph.ocean.common.utils.CollectionUtils;
@@ -175,7 +176,7 @@ public class NebulaGraphMapper implements GraphMapper {
                 CheckThrower.ifTrueThrow(execute != 0, ErrorEnum.UPDATE_NEBULA_EROR);
             }
             return 0;
-        } catch (IOErrorException | NotValidConnectionException | AuthFailedException e) {
+        } catch (IOErrorException | NotValidConnectionException | AuthFailedException | ClientServerIncompatibleException e) {
             log.error("批量执行sql异常,space={},sqlList={}", space, sqlList, e);
             throw new NebulaException(ErrorEnum.SYSTEM_ERROR);
         } finally {
@@ -191,7 +192,7 @@ public class NebulaGraphMapper implements GraphMapper {
         try {
             session = nebulaPoolSessionManager.getSession(space);
             return session.execute(sql);
-        } catch (IOErrorException | AuthFailedException e) {
+        } catch (IOErrorException | AuthFailedException | ClientServerIncompatibleException e) {
             log.error("执行sql异常,space={},sql={}", space, sql, e);
             throw new NebulaException(ErrorEnum.SYSTEM_ERROR);
         } finally {
@@ -217,7 +218,7 @@ public class NebulaGraphMapper implements GraphMapper {
         try {
             session = nebulaPoolSessionManager.getSession(space);
             return session.executeQueryDefined(sql);
-        } catch (IOErrorException | NotValidConnectionException | AuthFailedException e) {
+        } catch (IOErrorException | NotValidConnectionException | AuthFailedException | ClientServerIncompatibleException e) {
             log.error("执行sql异常,space={},sql={}", space, sql, e);
             throw new NebulaException(ErrorEnum.SYSTEM_ERROR);
         } finally {
